@@ -1,0 +1,111 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      # Tkinter is not bundled on the ubuntu GitHub Actions runner
+      - name: Install Linux system dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk libfuse2
+
+      # ── macOS build ──────────────────────────────────────────────────────────
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          uv run pyinstaller \
+            --windowed \
+            --name "Photos Sorter" \
+            --icon=photos_sorter/assets/icon.icns \
+            --add-data "photos_sorter/assets/icon.png:photos_sorter/assets" \
+            run.py
+
+      - name: Package DMG (macOS)
+        if: runner.os == 'macOS'
+        run: bash scripts/make_dmg.sh
+
+      # ── Windows build ─────────────────────────────────────────────────────────
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          uv run pyinstaller `
+            --onefile `
+            --windowed `
+            --name "Photos Sorter" `
+            --icon=photos_sorter/assets/icon.ico `
+            --add-data "photos_sorter/assets/icon.png;photos_sorter/assets" `
+            run.py
+
+      - name: Rename EXE (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Copy-Item "dist\Photos Sorter.exe" "Photos-Sorter-windows.exe"
+
+      # ── Linux build ───────────────────────────────────────────────────────────
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          uv run pyinstaller \
+            --onefile \
+            --name "Photos Sorter" \
+            --add-data "photos_sorter/assets/icon.png:photos_sorter/assets" \
+            run.py
+
+      - name: Package AppImage (Linux)
+        if: runner.os == 'Linux'
+        run: bash scripts/make_appimage.sh
+
+      # ── Upload to GitHub Release (tag push) ───────────────────────────────────
+      - name: Upload to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Photos-Sorter-macos.dmg
+            Photos-Sorter-windows.exe
+            Photos-Sorter-linux.AppImage
+          # Only the file that actually exists on this runner will match;
+          # the others won't be present and softprops will skip them.
+          fail_on_unmatched_files: false
+
+      # ── Upload as workflow artifact (manual run without a tag) ────────────────
+      - name: Upload build artifact (workflow_dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Photos-Sorter-${{ runner.os }}
+          path: |
+            Photos-Sorter-macos.dmg
+            Photos-Sorter-windows.exe
+            Photos-Sorter-linux.AppImage
+          if-no-files-found: warn
