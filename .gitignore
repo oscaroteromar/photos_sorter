@@ -5,9 +5,9 @@ __pycache__/
 venv/
 
 # PyInstaller build artifacts
-build/
-dist/
-*.spec
+app/build/
+app/dist/
+app/*.spec
 
 # macOS
 .DS_Store
