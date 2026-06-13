@@ -66,6 +66,61 @@ const { title = 'Photos Sorter', description = 'Sort your photos by the day they
       :root[data-anim] *, :root[data-anim] *::before, :root[data-anim] *::after { transition: none !important; }
       #ps-main { transition: none !important; }
     }
+
+    /* ============ HERO DESKTOP GRID PLACEMENT ============ */
+    @media (min-width: 641px) {
+      .ps-hero-a { grid-column: 1; grid-row: 1; }
+      .ps-hero-c { grid-column: 1; grid-row: 2; }
+      .ps-hero-b { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+    }
+
+    /* ============ RESPONSIVE OVERRIDES ============ */
+
+    /* --- Tablet (~900px): 3-col grids → 2-col --- */
+    @media (max-width: 900px) {
+      .ps-features-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .ps-how-grid      { grid-template-columns: repeat(2, 1fr) !important; }
+      .ps-download-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+
+    /* --- Phone (~640px): all grids → 1-col, hero reorder, padding reduced --- */
+    @media (max-width: 640px) {
+      /* Section horizontal padding */
+      section { padding-left: 16px !important; padding-right: 16px !important; }
+      header > div { padding-left: 16px !important; padding-right: 16px !important; }
+      footer > div { padding-left: 16px !important; padding-right: 16px !important; }
+
+      /* Hero: switch to single-column flex with order-based reorder */
+      .ps-hero {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 28px !important;
+        padding-top: 40px !important;
+      }
+      .ps-hero-a { order: 1; width: 100% !important; animation: none; }
+      .ps-hero-b { order: 2; width: 100% !important; animation: none; }
+      .ps-hero-c { order: 3; width: 100% !important; animation: none; }
+
+      /* Prevent folder-tree card from overflowing */
+      .ps-hero-b > div { max-width: 100% !important; }
+
+      /* All grids collapse to 1 column */
+      .ps-features-grid { grid-template-columns: 1fr !important; }
+      .ps-how-grid      { grid-template-columns: 1fr !important; }
+      .ps-caveats-grid  { grid-template-columns: 1fr !important; }
+      .ps-download-grid { grid-template-columns: 1fr !important; }
+
+      /* Promise band: ensure icon+text stack without overflow */
+      .ps-promise-band { padding: 28px 22px !important; gap: 20px !important; }
+      .ps-promise-band > div { min-width: 0 !important; }
+
+      /* Build-from-source block: ensure it wraps cleanly */
+      .ps-build-block > div { min-width: 0 !important; width: 100% !important; }
+
+      /* Footer: left-align everything */
+      .ps-footer-inner { flex-direction: column !important; align-items: flex-start !important; }
+      .ps-footer-links { margin-left: 0 !important; }
+    }
   </style>
 </head>
 <body>

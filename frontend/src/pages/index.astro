@@ -48,31 +48,19 @@ import Layout from '../layouts/Layout.astro';
   <span id="top"></span>
 
   <!-- ============ HERO ============ -->
-  <section style="max-width:1140px;margin:0 auto;padding:72px 28px 36px;display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;">
-    <div style="animation:psFade .5s ease both;">
+  <section class="ps-hero" style="max-width:1140px;margin:0 auto;padding:72px 28px 36px;display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;">
+    <!-- Block A: badge + title + tagline -->
+    <div class="ps-hero-a" style="animation:psFade .5s ease both;">
       <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.05em;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:999px;">
         <span style="width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block;"></span>
         <span data-i18n="hero.badge">Free · open source · Tkinter desktop app</span>
       </div>
       <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,5.2vw,58px);line-height:1.03;letter-spacing:-1.8px;color:var(--ink);margin:20px 0 0;text-wrap:balance;" data-i18n="hero.title">Sort your photos by the day they were taken.</h1>
       <p style="font-size:18px;line-height:1.6;color:var(--muted);max-width:31em;margin:22px 0 0;text-wrap:pretty;" data-i18n="hero.tagline">A desktop app that reads each photo's date and copies it into a tidy Year / Month folder tree. Your originals are never moved or deleted.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 0;">
-        <a
-          href="https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg"
-          target="_blank" rel="noopener"
-          data-download-primary
-          style="display:inline-flex;align-items:center;gap:9px;background:var(--inv);color:var(--invInk);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 22px;border-radius:12px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 4 5-4M5 20h14"/></svg>
-          <span data-i18n-primary-label>Download for macOS</span>
-        </a>
-        <a href="#download" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 20px;border-radius:12px;border:1px solid var(--line);"
-          data-i18n="hero.otherCta">All platforms</a>
-      </div>
-      <div style="font-size:13.5px;color:var(--faint);margin:18px 0 0;font-weight:600;" data-i18n="hero.meta">Free &amp; open source · macOS, Windows &amp; Linux</div>
     </div>
 
-    <!-- folder tree visual -->
-    <div style="animation:psFade .6s ease both;">
+    <!-- Block B: folder tree visual -->
+    <div class="ps-hero-b" style="animation:psFade .6s ease both;">
       <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 36px 70px -28px rgba(0,0,0,.4);overflow:hidden;">
         <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--line2);">
           <span style="width:11px;height:11px;border-radius:50%;background:var(--line);display:block;"></span>
@@ -112,11 +100,28 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
     </div>
+
+    <!-- Block C: CTA buttons + meta -->
+    <div class="ps-hero-c" style="animation:psFade .5s ease both;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin:0;">
+        <a
+          href="https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg"
+          target="_blank" rel="noopener"
+          data-download-primary
+          style="display:inline-flex;align-items:center;gap:9px;background:var(--inv);color:var(--invInk);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 22px;border-radius:12px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 4 5-4M5 20h14"/></svg>
+          <span data-i18n-primary-label>Download for macOS</span>
+        </a>
+        <a href="#download" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 20px;border-radius:12px;border:1px solid var(--line);"
+          data-i18n="hero.otherCta">All platforms</a>
+      </div>
+      <div style="font-size:13.5px;color:var(--faint);margin:18px 0 0;font-weight:600;" data-i18n="hero.meta">Free &amp; open source · macOS, Windows &amp; Linux</div>
+    </div>
   </section>
 
   <!-- ============ PROMISE ============ -->
   <section style="max-width:1140px;margin:28px auto;padding:0 28px;">
-    <div style="background:var(--inv);color:var(--invInk);border-radius:26px;padding:46px 48px;display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
+    <div class="ps-promise-band" style="background:var(--inv);color:var(--invInk);border-radius:26px;padding:46px 48px;display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
       <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.9;"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
       <div style="flex:1;min-width:260px;">
         <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(24px,3vw,32px);letter-spacing:-.8px;line-height:1.1;" data-i18n="promise.title">Your originals never move.</div>
@@ -131,7 +136,7 @@ import Layout from '../layouts/Layout.astro';
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(27px,3.4vw,38px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 6px;max-width:16em;" data-i18n="feat.title">Everything it does for your library</h2>
     <p style="font-size:17px;color:var(--muted);margin:0 0 38px;" data-i18n="feat.lead">Smart about dates, careful with your files.</p>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+    <div class="ps-features-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
       <!-- F1 -->
       <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
         <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 3v3M16 3v3"/><path d="M8.5 14.5l2 2 3.5-4"/></svg></div>
@@ -175,7 +180,7 @@ import Layout from '../layouts/Layout.astro';
   <section id="how" style="max-width:1140px;margin:0 auto;padding:60px 28px 20px;">
     <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);" data-i18n="how.eyebrow">How it works</div>
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(27px,3.4vw,38px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 38px;max-width:14em;" data-i18n="how.title">Three steps to a sorted library</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+    <div class="ps-how-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
       <div data-step="0" style="border-top:2px solid var(--ink);padding-top:22px;">
         <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--faint);" data-step-n>01</div>
         <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:var(--ink);margin:14px 0 8px;" data-step-title>Pick a folder</h3>
@@ -199,7 +204,7 @@ import Layout from '../layouts/Layout.astro';
     <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);" data-i18n="caveats.eyebrow">Good to know</div>
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(27px,3.4vw,38px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 38px;max-width:22em;" data-i18n="caveats.title">When a file might land in the wrong place</h2>
 
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
+    <div class="ps-caveats-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
       <!-- C1 -->
       <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
         <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);">
@@ -243,7 +248,7 @@ import Layout from '../layouts/Layout.astro';
       <p style="font-size:17px;line-height:1.6;color:var(--muted);margin:0 0 40px;" data-i18n="dl.lead">Free and open source. Grab a build for your system, or run it from source.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+    <div class="ps-download-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
       <!-- macOS -->
       <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;align-items:center;text-align:center;">
         <svg width="38" height="38" viewBox="0 0 24 24" style="color:var(--ink);"><path fill="currentColor" d="M16.1 4.6c-.1 1.1-.6 2.2-1.4 3-.8.9-2 1.5-3.1 1.4-.1-1.1.4-2.2 1.2-3 .8-.9 2.2-1.5 3.3-1.4zM19.6 16.8c-.5 1.2-1.1 2.3-1.9 3.2-.7.8-1.3 1.6-2.4 1.6-1 0-1.4-.6-2.6-.6s-1.6.6-2.6.6c-1.1 0-1.8-.9-2.5-1.7-1.6-1.9-2.8-5.3-1.2-7.6.8-1.1 2.1-1.8 3.4-1.8 1.1 0 1.8.6 2.7.6.9 0 1.4-.6 2.7-.6 1.1 0 2.3.6 3.1 1.6-2.6 1.5-2.3 5.3.8 6.7z"/></svg>
@@ -289,7 +294,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
     <!-- build from source -->
-    <div style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 30px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
+    <div class="ps-build-block" style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 30px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
       <div style="flex:1;min-width:230px;">
         <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--ink);" data-i18n="dl.buildTitle">Or build from source</div>
         <div style="font-size:14.5px;color:var(--muted);margin-top:6px;" data-i18n="dl.buildLead">Requires Python 3.13+ and the uv package manager.</div>
@@ -303,7 +308,7 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- ============ FOOTER ============ -->
   <footer style="border-top:1px solid var(--line2);margin-top:30px;">
-    <div style="max-width:1140px;margin:0 auto;padding:34px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <div class="ps-footer-inner" style="max-width:1140px;margin:0 auto;padding:34px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
       <div style="display:flex;align-items:center;gap:11px;">
         <svg width="30" height="30" viewBox="0 0 512 512" style="border-radius:8px;"><use href="#psIcon" /></svg>
         <div>
@@ -311,7 +316,7 @@ import Layout from '../layouts/Layout.astro';
           <div style="font-size:12.5px;color:var(--faint);" data-i18n="footer.rights">© 2026 · Built with Python &amp; Tkinter</div>
         </div>
       </div>
-      <div style="margin-left:auto;display:flex;gap:22px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;">
+      <div class="ps-footer-links" style="margin-left:auto;display:flex;gap:22px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;">
         <a href="https://github.com/oscaroteromar/photos_sorter" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">GitHub</a>
         <a href="https://github.com/oscaroteromar/photos_sorter#readme" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">README</a>
         <a href="https://github.com/oscaroteromar/photos_sorter/releases" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;" data-i18n="footer.releases">Releases</a>
