@@ -123,6 +123,8 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
+Both `v`-prefixed tags (`v1.0.0`) and bare version tags (`1.0.0`) trigger the release build.
+
 The `Build & Release` workflow runs on macOS, Windows, and Linux runners in parallel. Each runner builds a native artifact with PyInstaller (from the `app/` directory) and uploads it to the GitHub Release created for that tag. The three download URLs are stable:
 
 - `https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg`
