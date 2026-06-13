@@ -36,6 +36,7 @@ A cross-platform Tkinter desktop application that organises photos and videos in
 ## Setup & Run
 
 ```bash
+cd app
 uv sync
 uv run python run.py
 ```
@@ -43,6 +44,7 @@ uv run python run.py
 ### Running tests
 
 ```bash
+cd app
 uv run pytest
 ```
 
@@ -67,6 +69,7 @@ Dev dependencies including PyInstaller are installed automatically by `uv sync`.
 ### macOS
 
 ```bash
+cd app
 uv run pyinstaller --windowed --name "Photos Sorter" \
   --icon=photos_sorter/assets/icon.icns \
   --add-data "photos_sorter/assets/icon.png:photos_sorter/assets" \
@@ -77,6 +80,7 @@ open "dist/Photos Sorter.app"
 ### Windows
 
 ```bash
+cd app
 uv run pyinstaller --onefile --windowed --name "Photos Sorter" ^
   --icon=photos_sorter/assets/icon.ico ^
   --add-data "photos_sorter/assets/icon.png;photos_sorter/assets" ^
@@ -87,6 +91,7 @@ uv run pyinstaller --onefile --windowed --name "Photos Sorter" ^
 ### Linux
 
 ```bash
+cd app
 uv run pyinstaller --onefile --name "Photos Sorter" run.py
 # Output: dist/Photos Sorter
 ```
@@ -104,7 +109,7 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
-The `Build & Release` workflow runs on macOS, Windows, and Linux runners in parallel. Each runner builds a native artifact with PyInstaller and uploads it to the GitHub Release created for that tag. The three download URLs are stable:
+The `Build & Release` workflow runs on macOS, Windows, and Linux runners in parallel. Each runner builds a native artifact with PyInstaller (from the `app/` directory) and uploads it to the GitHub Release created for that tag. The three download URLs are stable:
 
 - `https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg`
 - `https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-windows.exe`
@@ -136,17 +141,26 @@ chmod +x Photos-Sorter-linux.AppImage
 ## Project layout
 
 ```
-photos_sorter/
-├── photos_sorter/
-│   ├── __init__.py
-│   ├── app.py        # Tkinter GUI
-│   ├── config.py     # Config load/save (~/.photos_sorter/config.json)
-│   ├── core.py       # EXIF extraction, path building, collision handling, copy logic
-│   └── strings.py    # UI string table (en/es)
-├── tests/
-│   ├── conftest.py
-│   └── test_core.py
-├── run.py            # Entry point
-├── pyproject.toml
-└── README.md
+photos_sorter/                     (repo root)
+├── .github/workflows/release.yml
+├── .gitignore
+├── README.md
+├── app/
+│   ├── photos_sorter/
+│   │   ├── __init__.py
+│   │   ├── app.py        # Tkinter GUI
+│   │   ├── config.py     # Config load/save (~/.photos_sorter/config.json)
+│   │   ├── core.py       # EXIF extraction, path building, collision handling, copy logic
+│   │   └── strings.py    # UI string table (en/es)
+│   ├── scripts/
+│   │   ├── make_dmg.sh
+│   │   └── make_appimage.sh
+│   ├── tests/
+│   │   ├── conftest.py
+│   │   └── test_core.py
+│   ├── run.py
+│   ├── pyproject.toml
+│   ├── requirements.txt
+│   └── uv.lock
+└── frontend/              # Future SPA (placeholder)
 ```
