@@ -162,6 +162,8 @@ class App:
         self._widgets: dict[str, ttk.Widget] = {}
         self._build_ui()
         self.refresh_labels()
+        self.root.update_idletasks()
+        self.root.minsize(self.root.winfo_reqwidth(), self.root.winfo_reqheight())
 
     def _set_icon(self) -> None:
         """Set the application window icon from the bundled PNG asset.
@@ -185,11 +187,14 @@ class App:
     def _build_ui(self) -> None:
         """Build all widgets and lay them out inside a padded ttk.Frame container."""
         root = self.root
-        root.resizable(False, False)
+        root.resizable(True, True)
+        root.rowconfigure(0, weight=1)
+        root.columnconfigure(0, weight=1)
 
         # Padded container frame — widgets are placed here, not directly on root
         container = ttk.Frame(root, padding=12)
         container.grid(row=0, column=0, sticky="nsew")
+        container.columnconfigure(1, weight=1)
 
         pad = {"padx": 6, "pady": 4}
 
