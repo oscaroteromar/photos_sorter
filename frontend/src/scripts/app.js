@@ -68,6 +68,7 @@ const STRINGS = {
       win: 'Windows SmartScreen warns that the publisher is unknown. Click "More info" on the dialog, then "Run anyway".',
       linux: 'Make the AppImage executable, then run it:',
     },
+    ui: { copy: 'Copy', copied: 'Copied!' },
     footer: { rights: '© 2026 · Built with Python & Tkinter', releases: 'Releases' },
   },
   es: {
@@ -138,6 +139,7 @@ const STRINGS = {
       win: 'Windows SmartScreen avisa de que el editor es desconocido. Haz clic en "Más información" en el aviso y luego en "Ejecutar de todas formas".',
       linux: 'Haz el AppImage ejecutable y luego ejecútalo:',
     },
+    ui: { copy: 'Copiar', copied: '¡Copiado!' },
     footer: { rights: '© 2026 · Hecho con Python y Tkinter', releases: 'Versiones' },
   },
 };
@@ -308,6 +310,82 @@ function updateMakeCommand() {
   if (el) el.textContent = '$ cd app && make ' + makeTarget;
 }
 
+// --- Copy-to-clipboard helpers ---
+
+const CLIPBOARD_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+const CHECK_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+function makeCopyButton() {
+  const btn = document.createElement('button');
+  btn.className = 'ps-copy-btn';
+  btn.setAttribute('aria-label', STRINGS[currentLang].ui.copy);
+  btn.innerHTML = CLIPBOARD_ICON;
+  return btn;
+}
+
+function attachCopyHandler(btn, getTextFn) {
+  btn.addEventListener('click', async () => {
+    const S = STRINGS[currentLang] || STRINGS.en;
+    const text = getTextFn();
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      btn.innerHTML = CHECK_ICON;
+      btn.setAttribute('aria-label', S.ui.copied);
+      setTimeout(() => {
+        btn.innerHTML = CLIPBOARD_ICON;
+        btn.setAttribute('aria-label', (STRINGS[currentLang] || STRINGS.en).ui.copy);
+      }, 1500);
+    } catch (err) {
+      // Silently fail — do not throw unhandled errors
+    }
+  });
+}
+
+function initCopyButtons() {
+  // 1. Build-from-source box
+  const buildBox = document.getElementById('ps-build-make-cmd');
+  if (buildBox) {
+    const wrapper = buildBox.parentElement;
+    wrapper.style.position = 'relative';
+    const btn = makeCopyButton();
+    wrapper.appendChild(btn);
+    attachCopyHandler(btn, () => {
+      const raw = (document.getElementById('ps-build-make-cmd') || buildBox).textContent || '';
+      // Strip leading "$ " prompt
+      return raw.replace(/^\$\s*/, '');
+    });
+  }
+
+  // 2. macOS install box
+  const macBox = document.getElementById('ps-install-mac-cmd');
+  if (macBox) {
+    macBox.style.position = 'relative';
+    const btn = makeCopyButton();
+    macBox.appendChild(btn);
+    attachCopyHandler(btn, () => 'xattr -dr com.apple.quarantine "/Applications/Photos Sorter.app"');
+  }
+
+  // 3. Linux install box
+  const linuxBox = document.getElementById('ps-install-linux-cmd');
+  if (linuxBox) {
+    linuxBox.style.position = 'relative';
+    const btn = makeCopyButton();
+    linuxBox.appendChild(btn);
+    attachCopyHandler(btn, () => 'chmod +x Photos-Sorter-linux.AppImage\n./Photos-Sorter-linux.AppImage');
+  }
+}
+
 // Wire up event listeners after DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initState();
@@ -320,4 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (enBtn) enBtn.addEventListener('click', () => setLang('en'));
   if (esBtn) esBtn.addEventListener('click', () => setLang('es'));
   if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+  initCopyButtons();
 });

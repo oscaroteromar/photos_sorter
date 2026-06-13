@@ -67,6 +67,34 @@ const { title = 'Photos Sorter', description = 'Sort your photos by the day they
       #ps-main { transition: none !important; }
     }
 
+    /* ============ COPY BUTTON ============ */
+    .ps-copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color .15s, background .15s, border-color .15s;
+    }
+    .ps-copy-btn:hover {
+      color: var(--ink);
+      background: var(--bg);
+      border-color: var(--line);
+    }
+    .ps-copy-btn:active {
+      color: var(--ink);
+    }
+
     /* ============ HERO DESKTOP GRID PLACEMENT ============ */
     @media (min-width: 641px) {
       .ps-hero-a { grid-column: 1; grid-row: 1; }
