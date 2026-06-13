@@ -64,7 +64,21 @@ Open the **Settings** window from the main UI to adjust these options:
 
 ## Building standalone executables
 
-Dev dependencies including PyInstaller are installed automatically by `uv sync`.
+Dev dependencies including PyInstaller are installed automatically by `uv sync --group dev`.
+
+### Build the installer from source
+
+An `app/Makefile` provides one-command installer builds. Run `uv sync --group dev` once first (or let the target do it), then:
+
+| OS | Command | Artifact |
+|---|---|---|
+| macOS | `cd app && make macos` | `app/Photos-Sorter-macos.dmg` |
+| Windows | `cd app && make windows` | `app\Photos-Sorter-windows.exe` |
+| Linux | `cd app && make linux` | `app/Photos-Sorter-linux.AppImage` |
+
+> **Cross-compile caveat:** PyInstaller cannot cross-compile. Each target must be run on its matching OS.
+
+Run `cd app && make help` to list all available targets, and `make clean` to remove build artefacts.
 
 ### macOS
 
