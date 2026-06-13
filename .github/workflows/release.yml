@@ -16,6 +16,10 @@ jobs:
         os: [macos-latest, windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
+    defaults:
+      run:
+        working-directory: app
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,9 +95,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            Photos-Sorter-macos.dmg
-            Photos-Sorter-windows.exe
-            Photos-Sorter-linux.AppImage
+            app/Photos-Sorter-macos.dmg
+            app/Photos-Sorter-windows.exe
+            app/Photos-Sorter-linux.AppImage
           # Only the file that actually exists on this runner will match;
           # the others won't be present and softprops will skip them.
           fail_on_unmatched_files: false
@@ -105,7 +109,7 @@ jobs:
         with:
           name: Photos-Sorter-${{ runner.os }}
           path: |
-            Photos-Sorter-macos.dmg
-            Photos-Sorter-windows.exe
-            Photos-Sorter-linux.AppImage
+            app/Photos-Sorter-macos.dmg
+            app/Photos-Sorter-windows.exe
+            app/Photos-Sorter-linux.AppImage
           if-no-files-found: warn
