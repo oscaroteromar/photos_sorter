@@ -12,6 +12,11 @@ app/*.spec
 # macOS
 .DS_Store
 
+# Astro / Node
+frontend/node_modules/
+frontend/dist/
+frontend/.astro/
+
 # Release packaging artifacts
 *.dmg
 *.AppImage
