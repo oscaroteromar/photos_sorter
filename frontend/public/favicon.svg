@@ -1,0 +1,25 @@
+<svg id="ic" width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect x="16" y="16" width="480" height="480" rx="116" fill="#F4F4F5"></rect>
+  <g transform="rotate(-8 198 286)">
+    <rect x="150" y="150" width="16" height="34" rx="8" fill="#16181D"></rect>
+    <rect x="226" y="150" width="16" height="34" rx="8" fill="#16181D"></rect>
+    <rect x="110" y="172" width="190" height="190" rx="26" fill="#FFFFFF" stroke="#16181D" stroke-width="11"></rect>
+    <path d="M110 198 a26 26 0 0 1 26 -26 l138 0 a26 26 0 0 1 26 26 l0 24 l-190 0 Z" fill="#16181D"></path>
+    <g fill="#9A9EA6">
+      <circle cx="150" cy="262" r="9"></circle><circle cx="190" cy="262" r="9"></circle><circle cx="230" cy="262" r="9"></circle><circle cx="270" cy="262" r="9"></circle>
+      <circle cx="150" cy="302" r="9"></circle><circle cx="270" cy="302" r="9"></circle>
+      <circle cx="150" cy="338" r="9"></circle><circle cx="190" cy="338" r="9"></circle>
+    </g>
+    <rect x="206" y="286" width="34" height="34" rx="11" fill="#16181D"></rect>
+  </g>
+  <g transform="rotate(7 318 306)">
+    <rect x="216" y="210" width="196" height="196" rx="26" fill="#FFFFFF" stroke="#16181D" stroke-width="11"></rect>
+    <clipPath id="finClip"><rect x="228" y="222" width="172" height="172" rx="15"></rect></clipPath>
+    <g clip-path="url(#finClip)">
+      <rect x="228" y="222" width="172" height="172" fill="#ECEDF0"></rect>
+      <circle cx="362" cy="258" r="21" fill="#16181D"></circle>
+      <path d="M228 360 L274 312 L308 346 L350 302 L400 350 L400 394 L228 394 Z" fill="#595D66"></path>
+      <path d="M228 372 L268 332 L308 366 L356 320 L400 358 L400 394 L228 394 Z" fill="#16181D"></path>
+    </g>
+  </g>
+</svg>

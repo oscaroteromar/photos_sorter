@@ -1,0 +1,326 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Photos Sorter — Sort your photos by date" description="A desktop app that reads each photo's date and copies it into a tidy Year / Month folder tree. Free and open source.">
+
+<div style="min-height:100vh;background:var(--bg);color:var(--ink);">
+
+  <!-- ============ NAV ============ -->
+  <header style="position:sticky;top:0;z-index:30;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);">
+    <div style="max-width:1140px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;">
+      <a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;">
+        <svg width="34" height="34" viewBox="0 0 512 512" style="border-radius:9px;display:block;"><use href="#psIcon" /></svg>
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.3px;color:var(--ink);">Photos Sorter</span>
+      </a>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+        <!-- Language segmented control -->
+        <div style="display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;">
+          <button
+            id="ps-lang-en"
+            data-base-style="padding:6px 14px;border:none;border-radius:999px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;line-height:1;"
+            style="padding:6px 14px;border:none;border-radius:999px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;line-height:1;background:var(--inv);color:var(--invInk);"
+          >EN</button>
+          <button
+            id="ps-lang-es"
+            data-base-style="padding:6px 14px;border:none;border-radius:999px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;line-height:1;"
+            style="padding:6px 14px;border:none;border-radius:999px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;line-height:1;background:transparent;color:var(--muted);"
+          >ES</button>
+        </div>
+        <!-- Theme toggle -->
+        <button
+          id="ps-theme-btn"
+          aria-label="Toggle theme"
+          style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:11px;background:transparent;color:var(--ink);cursor:pointer;"
+        >
+          <!-- Moon icon default (overridden by JS) -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg>
+        </button>
+        <!-- GitHub link -->
+        <a href="https://github.com/oscaroteromar/photos_sorter" target="_blank" rel="noopener" aria-label="GitHub"
+          style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:11px;background:transparent;color:var(--ink);text-decoration:none;">
+          <svg width="19" height="19" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10 10 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="ps-main">
+  <span id="top"></span>
+
+  <!-- ============ HERO ============ -->
+  <section style="max-width:1140px;margin:0 auto;padding:72px 28px 36px;display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;">
+    <div style="animation:psFade .5s ease both;">
+      <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.05em;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:999px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block;"></span>
+        <span data-i18n="hero.badge">Free · open source · Tkinter desktop app</span>
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(36px,5.2vw,58px);line-height:1.03;letter-spacing:-1.8px;color:var(--ink);margin:20px 0 0;text-wrap:balance;" data-i18n="hero.title">Sort your photos by the day they were taken.</h1>
+      <p style="font-size:18px;line-height:1.6;color:var(--muted);max-width:31em;margin:22px 0 0;text-wrap:pretty;" data-i18n="hero.tagline">A desktop app that reads each photo's date and copies it into a tidy Year / Month folder tree. Your originals are never moved or deleted.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 0;">
+        <a
+          href="https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg"
+          target="_blank" rel="noopener"
+          data-download-primary
+          style="display:inline-flex;align-items:center;gap:9px;background:var(--inv);color:var(--invInk);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 22px;border-radius:12px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 4 5-4M5 20h14"/></svg>
+          <span data-i18n-primary-label>Download for macOS</span>
+        </a>
+        <a href="#download" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 20px;border-radius:12px;border:1px solid var(--line);"
+          data-i18n="hero.otherCta">All platforms</a>
+      </div>
+      <div style="font-size:13.5px;color:var(--faint);margin:18px 0 0;font-weight:600;" data-i18n="hero.meta">Free &amp; open source · macOS, Windows &amp; Linux</div>
+    </div>
+
+    <!-- folder tree visual -->
+    <div style="animation:psFade .6s ease both;">
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 36px 70px -28px rgba(0,0,0,.4);overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--line2);">
+          <span style="width:11px;height:11px;border-radius:50%;background:var(--line);display:block;"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:var(--line);display:block;"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:var(--line);display:block;"></span>
+          <span style="margin-left:8px;font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:600;color:var(--faint);" data-i18n="visual.title">Output folder</span>
+        </div>
+        <!-- before -->
+        <div style="padding:16px 18px 6px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;" data-i18n="visual.before">Unsorted input</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            <span style="font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line2);padding:5px 10px;border-radius:8px;">IMG_4821.jpg</span>
+            <span style="font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line2);padding:5px 10px;border-radius:8px;">VID_0192.mp4</span>
+            <span style="font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line2);padding:5px 10px;border-radius:8px;">IMG_9920.png</span>
+            <span style="font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line2);padding:5px 10px;border-radius:8px;">IMG_5003.heic</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;">
+          <span style="height:1px;flex:1;background:var(--line);"></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--faint);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <span data-i18n="visual.arrow">sorted by capture date</span>
+          </span>
+          <span style="height:1px;flex:1;background:var(--line);"></span>
+        </div>
+        <!-- after tree -->
+        <div style="padding:4px 20px 22px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;line-height:1.95;color:var(--ink);">
+          <div style="display:flex;align-items:center;gap:8px;font-weight:600;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>2024</div>
+          <div style="margin-left:20px;display:flex;align-items:center;gap:8px;font-weight:600;color:var(--muted);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-i18n="visual.jun">06-June</span></div>
+          <div style="margin-left:42px;display:flex;align-items:center;gap:8px;color:var(--faint);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg>IMG_4821.jpg</div>
+          <div style="margin-left:42px;display:flex;align-items:center;gap:8px;color:var(--faint);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg>VID_0192.mp4</div>
+          <div style="margin-left:20px;display:flex;align-items:center;gap:8px;font-weight:600;color:var(--muted);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-i18n="visual.jul">07-July</span></div>
+          <div style="margin-left:42px;display:flex;align-items:center;gap:8px;color:var(--faint);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg>IMG_5003.heic</div>
+          <div style="display:flex;align-items:center;gap:8px;font-weight:600;margin-top:2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>2023</div>
+          <div style="margin-left:20px;display:flex;align-items:center;gap:8px;font-weight:600;color:var(--muted);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-i18n="visual.dec">12-December</span></div>
+          <div style="margin-left:42px;display:flex;align-items:center;gap:8px;color:var(--faint);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg>IMG_9920.png</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROMISE ============ -->
+  <section style="max-width:1140px;margin:28px auto;padding:0 28px;">
+    <div style="background:var(--inv);color:var(--invInk);border-radius:26px;padding:46px 48px;display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.9;"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div style="flex:1;min-width:260px;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(24px,3vw,32px);letter-spacing:-.8px;line-height:1.1;" data-i18n="promise.title">Your originals never move.</div>
+        <div style="font-size:16.5px;line-height:1.6;opacity:.78;margin-top:12px;max-width:46em;" data-i18n="promise.sub">Photos Sorter only ever copies. Nothing in your source folder is renamed, moved, or deleted — ever. No other data on your system is touched.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" style="max-width:1140px;margin:0 auto;padding:64px 28px 20px;">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);" data-i18n="feat.eyebrow">Features</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(27px,3.4vw,38px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 6px;max-width:16em;" data-i18n="feat.title">Everything it does for your library</h2>
+    <p style="font-size:17px;color:var(--muted);margin:0 0 38px;" data-i18n="feat.lead">Smart about dates, careful with your files.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <!-- F1 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 3v3M16 3v3"/><path d="M8.5 14.5l2 2 3.5-4"/></svg></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="feat.f1.title">Smart date detection</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="feat.f1.desc">Reads EXIF capture dates, Google Takeout sidecars and filesystem timestamps — in priority order — so every file lands on the right day.</p>
+      </div>
+      <!-- F2 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h4"/><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M8 13h8M8 16h5"/></svg></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="feat.f2.title">Tidy folder trees</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="feat.f2.desc">Organises everything into Year / Month folders. Choose plain numbers (2024/06) or named months (2024/06-June).</p>
+      </div>
+      <!-- F3 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16a4 4 0 0 1 .5-8 5 5 0 0 1 9.4 1.4 3.5 3.5 0 0 1 .1 6.6"/><path d="M12 11v6M9.5 14.5L12 17l2.5-2.5"/></svg></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="feat.f3.title">Google Takeout ready</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="feat.f3.desc">Turn on Takeout mode and it reads photoTakenTime from each sidecar JSON. The JSON files are never copied across.</p>
+      </div>
+      <!-- F4 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4-8 4-8-4 8-4z"/><path d="M4 12l8 4 8-4M4 16.5l8 4 8-4"/></svg></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="feat.f4.title">Every common format</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="feat.f4.desc">JPEG, PNG, HEIC/HEIF, MOV and MP4. Input folders are scanned recursively, however deep they go.</p>
+      </div>
+      <!-- F5 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="feat.f5.title">No overwrites, ever</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="feat.f5.desc">Duplicate names are auto-renamed — IMG_001.jpg becomes IMG_001 (1).jpg. Nothing is lost.</p>
+      </div>
+      <!-- F6 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="feat.f6.title">Bilingual &amp; remembered</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="feat.f6.desc">Full English and Spanish UI with localised month names, and your settings saved between runs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="how" style="max-width:1140px;margin:0 auto;padding:60px 28px 20px;">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);" data-i18n="how.eyebrow">How it works</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(27px,3.4vw,38px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 38px;max-width:14em;" data-i18n="how.title">Three steps to a sorted library</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+      <div data-step="0" style="border-top:2px solid var(--ink);padding-top:22px;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--faint);" data-step-n>01</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:var(--ink);margin:14px 0 8px;" data-step-title>Pick a folder</h3>
+        <p style="font-size:15px;line-height:1.6;color:var(--muted);margin:0;" data-step-desc>Point Photos Sorter at any folder of photos and videos — nested subfolders included.</p>
+      </div>
+      <div data-step="1" style="border-top:2px solid var(--ink);padding-top:22px;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--faint);" data-step-n>02</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:var(--ink);margin:14px 0 8px;" data-step-title>Choose your options</h3>
+        <p style="font-size:15px;line-height:1.6;color:var(--muted);margin:0;" data-step-desc>Month format, language and Google Takeout mode. Set them once — they're remembered.</p>
+      </div>
+      <div data-step="2" style="border-top:2px solid var(--ink);padding-top:22px;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--faint);" data-step-n>03</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:var(--ink);margin:14px 0 8px;" data-step-title>Get a sorted copy</h3>
+        <p style="font-size:15px;line-height:1.6;color:var(--muted);margin:0;" data-step-desc>A clean Year / Month tree appears in your output folder. Originals stay exactly where they are.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAVEATS ============ -->
+  <section id="caveats" style="max-width:1140px;margin:0 auto;padding:60px 28px 20px;">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);" data-i18n="caveats.eyebrow">Good to know</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(27px,3.4vw,38px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 38px;max-width:22em;" data-i18n="caveats.title">When a file might land in the wrong place</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
+      <!-- C1 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2.5"/><path d="M16 11l-4 3-4-3"/><path d="M2 10h20"/></svg>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="caveats.c1.title">Videos use file dates</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="caveats.c1.desc">Videos (.mov, .mp4) don't have their embedded capture date read — they're sorted by file-system timestamps (or a Google Takeout date, if present). If those were altered, a video can land in the wrong month.</p>
+      </div>
+      <!-- C2 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/><path d="M15 4l3 3M18 4l-3 3"/></svg>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="caveats.c2.title">Photos with stripped metadata</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="caveats.c2.desc">Screenshots, edited exports, and images received via apps like WhatsApp often lose their EXIF data and fall back to file dates — usually when you downloaded the file, not when it was taken.</p>
+      </div>
+      <!-- C3 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="caveats.c3.title">Unsupported formats are skipped</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="caveats.c3.desc">Only JPEG, PNG, HEIC/HEIF, MOV and MP4 are processed. RAW (CR2, NEF, DNG), TIFF, GIF, WebP, AVI, MKV and others are skipped and left untouched.</p>
+      </div>
+      <!-- C4 -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v4M12 17h.01"/></svg>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:18px 0 8px;" data-i18n="caveats.c4.title">No date? Nothing is lost</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="caveats.c4.desc">If no capture date and no file date can be read at all, the file is copied into an "Unknown" folder so nothing is lost — you can sort those by hand.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD ============ -->
+  <section id="download" style="max-width:1140px;margin:0 auto;padding:64px 28px 40px;">
+    <div style="text-align:center;max-width:30em;margin:0 auto;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);" data-i18n="dl.eyebrow">Download</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.9px;color:var(--ink);margin:12px 0 8px;" data-i18n="dl.title">Get Photos Sorter</h2>
+      <p style="font-size:17px;line-height:1.6;color:var(--muted);margin:0 0 40px;" data-i18n="dl.lead">Free and open source. Grab a build for your system, or run it from source.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <!-- macOS -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <svg width="38" height="38" viewBox="0 0 24 24" style="color:var(--ink);"><path fill="currentColor" d="M16.1 4.6c-.1 1.1-.6 2.2-1.4 3-.8.9-2 1.5-3.1 1.4-.1-1.1.4-2.2 1.2-3 .8-.9 2.2-1.5 3.3-1.4zM19.6 16.8c-.5 1.2-1.1 2.3-1.9 3.2-.7.8-1.3 1.6-2.4 1.6-1 0-1.4-.6-2.6-.6s-1.6.6-2.6.6c-1.1 0-1.8-.9-2.5-1.7-1.6-1.9-2.8-5.3-1.2-7.6.8-1.1 2.1-1.8 3.4-1.8 1.1 0 1.8.6 2.7.6.9 0 1.4-.6 2.7-.6 1.1 0 2.3.6 3.1 1.6-2.6 1.5-2.3 5.3.8 6.7z"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--ink);margin:16px 0 4px;">macOS</div>
+        <div style="font-size:13px;color:var(--faint);font-weight:600;margin-bottom:20px;" data-i18n="dl.mac">macOS 11+ · .app bundle</div>
+        <a
+          href="https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg"
+          target="_blank" rel="noopener"
+          data-download-os="mac"
+          style="margin-top:auto;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--inv);color:var(--invInk);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;padding:12px;border-radius:11px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 4 5-4M5 20h14"/></svg>
+          <span data-i18n="dl.btn">Download</span>
+        </a>
+      </div>
+      <!-- Windows -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <svg width="36" height="36" viewBox="0 0 24 24" style="color:var(--ink);"><g fill="currentColor"><rect x="3" y="3.5" width="8" height="8" rx="1"/><rect x="13" y="3.5" width="8" height="8" rx="1"/><rect x="3" y="13.5" width="8" height="8" rx="1"/><rect x="13" y="13.5" width="8" height="8" rx="1"/></g></svg>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--ink);margin:16px 0 4px;">Windows</div>
+        <div style="font-size:13px;color:var(--faint);font-weight:600;margin-bottom:20px;" data-i18n="dl.win">Windows 10 / 11 · .exe</div>
+        <a
+          href="https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-windows.exe"
+          target="_blank" rel="noopener"
+          data-download-os="win"
+          style="margin-top:auto;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--inv);color:var(--invInk);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;padding:12px;border-radius:11px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 4 5-4M5 20h14"/></svg>
+          <span data-i18n="dl.btn">Download</span>
+        </a>
+      </div>
+      <!-- Linux -->
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink);"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l3 2.5L7 14M12.5 14H17"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--ink);margin:16px 0 4px;">Linux</div>
+        <div style="font-size:13px;color:var(--faint);font-weight:600;margin-bottom:20px;" data-i18n="dl.linux">Standalone binary</div>
+        <a
+          href="https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-linux.AppImage"
+          target="_blank" rel="noopener"
+          data-download-os="linux"
+          style="margin-top:auto;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--inv);color:var(--invInk);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;padding:12px;border-radius:11px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 4 5-4M5 20h14"/></svg>
+          <span data-i18n="dl.btn">Download</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- build from source -->
+    <div style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 30px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:230px;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--ink);" data-i18n="dl.buildTitle">Or build from source</div>
+        <div style="font-size:14.5px;color:var(--muted);margin-top:6px;" data-i18n="dl.buildLead">Requires Python 3.13+ and the uv package manager.</div>
+      </div>
+      <div style="flex:1;min-width:260px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;line-height:1.9;color:var(--ink);">
+        <div style="color:var(--muted);font-size:12.5px;margin-bottom:2px;" id="ps-build-installer-label">Build the installer (choose your OS — macos, windows, linux):</div>
+        <div style="color:var(--faint);" id="ps-build-make-cmd">$ cd app &amp;&amp; make macos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="border-top:1px solid var(--line2);margin-top:30px;">
+    <div style="max-width:1140px;margin:0 auto;padding:34px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:11px;">
+        <svg width="30" height="30" viewBox="0 0 512 512" style="border-radius:8px;"><use href="#psIcon" /></svg>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--ink);">Photos Sorter</div>
+          <div style="font-size:12.5px;color:var(--faint);" data-i18n="footer.rights">© 2026 · Built with Python &amp; Tkinter</div>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:22px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;">
+        <a href="https://github.com/oscaroteromar/photos_sorter" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">GitHub</a>
+        <a href="https://github.com/oscaroteromar/photos_sorter#readme" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">README</a>
+        <a href="https://github.com/oscaroteromar/photos_sorter/releases" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;" data-i18n="footer.releases">Releases</a>
+      </div>
+    </div>
+  </footer>
+  </main>
+
+</div>
+
+<script src="../scripts/app.js"></script>
+</Layout>
