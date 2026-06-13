@@ -51,7 +51,9 @@ STRINGS: dict[str, dict[str, str]] = {
             "- Language: switch the app between English and Spanish. This also changes the month names.\n"
             "- Google Takeout format: turn this on if your folder comes from Google Takeout, where each photo "
             "has a matching .json file. The tool will read the real date from that .json file. "
-            "The .json files are not copied."
+            "The .json files are not copied.\n\n"
+            "More help\n\n"
+            "For more guides and help, visit https://photos-sorter.oterom.xyz"
         ),
     },
     "es": {
@@ -100,7 +102,9 @@ STRINGS: dict[str, dict[str, str]] = {
             "- Idioma: cambia la aplicación entre inglés y español. También cambia los nombres de los meses.\n"
             "- Formato de Google Takeout: actívalo si tu carpeta proviene de Google Takeout, donde cada foto "
             "tiene un archivo .json correspondiente. La herramienta leerá la fecha real de ese archivo .json. "
-            "Los archivos .json no se copian."
+            "Los archivos .json no se copian.\n\n"
+            "Más ayuda\n\n"
+            "Para más guías y ayuda, visita https://photos-sorter.oterom.xyz"
         ),
     },
 }
