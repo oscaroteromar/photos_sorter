@@ -93,6 +93,46 @@ uv run pyinstaller --onefile --name "Photos Sorter" run.py
 
 The resulting binary can be distributed without a Python installation.
 
+## Releases & installation
+
+### Cutting a release
+
+Push a version tag and GitHub Actions does the rest:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The `Build & Release` workflow runs on macOS, Windows, and Linux runners in parallel. Each runner builds a native artifact with PyInstaller and uploads it to the GitHub Release created for that tag. The three download URLs are stable:
+
+- `https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-macos.dmg`
+- `https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-windows.exe`
+- `https://github.com/oscaroteromar/photos_sorter/releases/latest/download/Photos-Sorter-linux.AppImage`
+
+The app is **not code-signed or notarized** on any platform. Follow the platform-specific workarounds below after downloading.
+
+### macOS — bypass Gatekeeper quarantine
+
+macOS will refuse to open an unsigned `.app` downloaded from the internet. The old right-click → Open trick is unreliable on recent macOS versions. Instead, after dragging the app to `/Applications`, run this once in Terminal:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/Photos Sorter.app"
+```
+
+Then open the app normally from Finder or Spotlight.
+
+### Windows — bypass SmartScreen
+
+Windows SmartScreen will warn that the publisher is unknown. Click **More info** on the warning dialog, then click **Run anyway**.
+
+### Linux — make the AppImage executable
+
+```bash
+chmod +x Photos-Sorter-linux.AppImage
+./Photos-Sorter-linux.AppImage
+```
+
 ## Project layout
 
 ```
