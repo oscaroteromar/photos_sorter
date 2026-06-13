@@ -288,6 +288,36 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
+    <!-- first launch / security warning -->
+    <div class="ps-install-block" style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 30px;">
+      <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink);flex-shrink:0;margin-top:3px;"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--ink);" data-i18n="install.title">First launch — your system may block it</div>
+          <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:6px 0 0;" data-i18n="install.intro">These builds are unsigned, so your OS shows a one-time security warning. Here's how to allow Photos Sorter on each system.</p>
+        </div>
+      </div>
+      <div class="ps-install-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+        <!-- macOS -->
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:10px;">macOS</div>
+          <p style="font-size:13.5px;line-height:1.6;color:var(--muted);margin:0 0 12px;" data-i18n="install.mac">macOS says the app is from an unidentified developer and can't be checked for malware. After moving Photos Sorter to your Applications folder, run this once in Terminal, then open it normally:</p>
+          <div style="background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:11px 14px;font-family:'Space Grotesk',monospace;font-size:12.5px;color:var(--ink);word-break:break-all;overflow-wrap:break-word;line-height:1.6;">xattr -dr com.apple.quarantine "/Applications/Photos Sorter.app"</div>
+        </div>
+        <!-- Windows -->
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:10px;">Windows</div>
+          <p style="font-size:13.5px;line-height:1.6;color:var(--muted);margin:0;" data-i18n="install.win">Windows SmartScreen warns that the publisher is unknown. Click "More info" on the dialog, then "Run anyway".</p>
+        </div>
+        <!-- Linux -->
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:10px;">Linux</div>
+          <p style="font-size:13.5px;line-height:1.6;color:var(--muted);margin:0 0 12px;" data-i18n="install.linux">Make the AppImage executable, then run it:</p>
+          <div style="background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:11px 14px;font-family:'Space Grotesk',monospace;font-size:12.5px;color:var(--ink);word-break:break-all;overflow-wrap:break-word;line-height:1.9;">chmod +x Photos-Sorter-linux.AppImage<br>./Photos-Sorter-linux.AppImage</div>
+        </div>
+      </div>
+    </div>
+
     <!-- build from source -->
     <div class="ps-build-block" style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 30px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
       <div style="flex:1;min-width:230px;">

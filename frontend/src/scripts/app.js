@@ -61,6 +61,13 @@ const STRINGS = {
       buildLead: 'Requires Python 3.13+ and the uv package manager.',
       buildInstaller: 'Build the installer (choose your OS — macos, windows, linux):',
     },
+    install: {
+      title: 'First launch — your system may block it',
+      intro: 'These builds are unsigned, so your OS shows a one-time security warning. Here\'s how to allow Photos Sorter on each system.',
+      mac: 'macOS says the app is from an unidentified developer and can\'t be checked for malware. After moving Photos Sorter to your Applications folder, run this once in Terminal, then open it normally:',
+      win: 'Windows SmartScreen warns that the publisher is unknown. Click "More info" on the dialog, then "Run anyway".',
+      linux: 'Make the AppImage executable, then run it:',
+    },
     footer: { rights: '© 2026 · Built with Python & Tkinter', releases: 'Releases' },
   },
   es: {
@@ -123,6 +130,13 @@ const STRINGS = {
       buildTitle: 'O compílalo desde el código',
       buildLead: 'Requiere Python 3.13+ y el gestor de paquetes uv.',
       buildInstaller: 'Compila el instalador (elige tu SO — macos, windows, linux):',
+    },
+    install: {
+      title: 'Primer inicio — tu sistema puede bloquearlo',
+      intro: 'Estas versiones no están firmadas, así que tu sistema muestra un aviso de seguridad la primera vez. Así puedes permitir Photos Sorter en cada sistema.',
+      mac: 'macOS dice que la app es de un desarrollador no identificado y que no puede comprobar si tiene malware. Tras mover Photos Sorter a tu carpeta de Aplicaciones, ejecuta esto una vez en la Terminal y luego ábrela normalmente:',
+      win: 'Windows SmartScreen avisa de que el editor es desconocido. Haz clic en "Más información" en el aviso y luego en "Ejecutar de todas formas".',
+      linux: 'Haz el AppImage ejecutable y luego ejecútalo:',
     },
     footer: { rights: '© 2026 · Hecho con Python y Tkinter', releases: 'Versiones' },
   },

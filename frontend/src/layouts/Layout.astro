@@ -78,9 +78,10 @@ const { title = 'Photos Sorter', description = 'Sort your photos by the day they
 
     /* --- Tablet (~900px): 3-col grids → 2-col --- */
     @media (max-width: 900px) {
-      .ps-features-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .ps-how-grid      { grid-template-columns: repeat(2, 1fr) !important; }
-      .ps-download-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .ps-features-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+      .ps-how-grid       { grid-template-columns: repeat(2, 1fr) !important; }
+      .ps-download-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+      .ps-install-grid   { grid-template-columns: repeat(2, 1fr) !important; }
     }
 
     /* --- Phone (~640px): all grids → 1-col, hero reorder, padding reduced --- */
@@ -105,10 +106,14 @@ const { title = 'Photos Sorter', description = 'Sort your photos by the day they
       .ps-hero-b > div { max-width: 100% !important; }
 
       /* All grids collapse to 1 column */
-      .ps-features-grid { grid-template-columns: 1fr !important; }
-      .ps-how-grid      { grid-template-columns: 1fr !important; }
-      .ps-caveats-grid  { grid-template-columns: 1fr !important; }
-      .ps-download-grid { grid-template-columns: 1fr !important; }
+      .ps-features-grid  { grid-template-columns: 1fr !important; }
+      .ps-how-grid       { grid-template-columns: 1fr !important; }
+      .ps-caveats-grid   { grid-template-columns: 1fr !important; }
+      .ps-download-grid  { grid-template-columns: 1fr !important; }
+      .ps-install-grid   { grid-template-columns: 1fr !important; }
+
+      /* Install block: reduce padding on mobile */
+      .ps-install-block  { padding: 20px 16px !important; }
 
       /* Promise band: ensure icon+text stack without overflow */
       .ps-promise-band { padding: 28px 22px !important; gap: 20px !important; }
