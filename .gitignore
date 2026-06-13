@@ -11,3 +11,9 @@ dist/
 
 # macOS
 .DS_Store
+
+# Release packaging artifacts
+*.dmg
+*.AppImage
+AppDir/
+appimagetool
